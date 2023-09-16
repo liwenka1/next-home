@@ -1,5 +1,7 @@
 'use client'
 
+import { weather } from '@/app/type/weather'
+import axios from 'axios'
 import { useEffect, useMemo, useState } from 'react'
 
 const Clock = () => {
@@ -40,6 +42,13 @@ const Clock = () => {
     return { date, month, year, day, daysOfWeek }
   }, [])
 
+  const [weather, setWeather] = useState<weather | null>(null)
+  useEffect(() => {
+    axios.get('https://api.oioweb.cn/api/weather/GetWeather').then((res: { data: weather }) => {
+      setWeather(res.data)
+    })
+  }, [])
+
   return (
     <div className="rounded-lg flex flex-col items-center justify-center text-white text-7xl sm:text-9xl w-full">
       <p>
@@ -52,6 +61,7 @@ const Clock = () => {
         {minutes[1]}:{seconds[0]}
         {seconds[1]}
       </p>
+      <p>{weather && weather.result.condition.tips}</p>
     </div>
   )
 }

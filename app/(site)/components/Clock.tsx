@@ -1,59 +1,14 @@
 'use client'
 
-import { weather } from '@/app/type/weather'
-import axios from 'axios'
-import { useEffect, useMemo, useState } from 'react'
+import { useClock } from '@/app/hook/useClock'
 
 const Clock = () => {
-  const [hours, setHours] = useState('00')
-  const [minutes, setMinutes] = useState('00')
-  const [seconds, setSeconds] = useState('00')
-
-  useEffect(() => {
-    const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
-  })
-
-  const updateTime = () => {
-    const now = new Date()
-    const hh = String(now.getHours()).padStart(2, '0')
-    const mm = String(now.getMinutes()).padStart(2, '0')
-    const ss = String(now.getSeconds()).padStart(2, '0')
-
-    if (hh !== hours) {
-      setHours(hh)
-    }
-
-    if (mm !== minutes) {
-      setMinutes(mm)
-    }
-
-    if (ss !== seconds) {
-      setSeconds(ss)
-    }
-  }
-  const currentDate = useMemo(() => {
-    const currentDate = new Date()
-    const date = currentDate.getDate()
-    const month = currentDate.getMonth() + 1
-    const year = currentDate.getFullYear()
-    const day = currentDate.getDay()
-    const daysOfWeek = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-    return { date, month, year, day, daysOfWeek }
-  }, [])
-
-  const [weather, setWeather] = useState<weather | null>(null)
-  useEffect(() => {
-    axios.get('https://api.oioweb.cn/api/weather/GetWeather').then((res: { data: weather }) => {
-      setWeather(res.data)
-    })
-  }, [])
+  const { hours, minutes, seconds, currentDate, weather } = useClock()
 
   return (
-    <div className="rounded-lg flex flex-col items-center justify-center text-white text-7xl sm:text-9xl w-full">
+    <div className="flex flex-col items-center justify-center text-white text-4xl md:text-7xl md:w-auto cursor-default">
       <p>
-        {currentDate.year + '-' + currentDate.month + '-' + currentDate.date}
-        {currentDate.daysOfWeek[currentDate.day]}
+        {currentDate.year + '-' + currentDate.month + '-' + currentDate.date} {currentDate.daysOfWeek[currentDate.day]}
       </p>
       <p>
         {hours[0]}
@@ -61,7 +16,13 @@ const Clock = () => {
         {minutes[1]}:{seconds[0]}
         {seconds[1]}
       </p>
-      <p>{weather && weather.result.condition.tips}</p>
+      <div className="flex items-center justify-center gap-1 md:gap-3 text-2xl md:text-4xl">
+        <span>{weather?.city}</span>
+        <span>{weather?.temperature}℃</span>
+        <span>{weather?.weather}</span>
+        <span>{weather?.winddirection}风</span>
+        <span> {weather?.windpower}</span>
+      </div>
     </div>
   )
 }

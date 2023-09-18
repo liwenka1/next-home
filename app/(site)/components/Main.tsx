@@ -1,6 +1,6 @@
-import Clock from './Clock'
-import Focusinfo from './Focusinfo'
-import SiteInfo from './SiteInfo'
+import Clock from '@/app/components/Clock'
+import Focusinfo from '@/app/components/Focusinfo'
+import SiteInfo from '@/app/components/SiteInfo'
 
 const Main = () => {
   return (

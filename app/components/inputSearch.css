@@ -1,0 +1,15 @@
+.input-transition-enter {
+	@apply opacity-0
+}
+
+.input-transition-enter-active {
+	@apply opacity-100 transition-all duration-300
+}
+
+.input-transition-exit {
+  @apply opacity-100
+}
+
+.input-transition-exit-active {
+	@apply opacity-0 transition-all duration-300
+}

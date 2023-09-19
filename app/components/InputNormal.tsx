@@ -14,10 +14,10 @@ const InputNormal: React.FC<InputNormalProps> = ({ onFocus }) => {
         placeholder="Search"
         onFocus={onFocus}
       ></Input>
-      <div className="absolute h-9 w-12 flex items-center justify-center cursor-pointer rounded-full hover:bg-black hover:opacity-50">
+      <div className="absolute h-9 w-12 flex items-center justify-center cursor-pointer rounded-full hover:bg-black hover:bg-opacity-50">
         <FaGoogle size={15} />
       </div>
-      <div className="absolute h-9 w-12 flex items-center justify-center right-0 cursor-pointer rounded-full hover:bg-black hover:opacity-50">
+      <div className="absolute h-9 w-12 flex items-center justify-center right-0 cursor-pointer rounded-full hover:bg-black hover:bg-opacity-50">
         <FaSearch size={15} />
       </div>
     </div>

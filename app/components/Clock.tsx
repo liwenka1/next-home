@@ -6,7 +6,7 @@ const Clock = () => {
   const { hours, minutes, seconds, currentDate, weather } = useClock()
 
   return (
-    <div className="flex flex-col items-center justify-center text-white text-xl md:text-3xl md:w-auto cursor-default">
+    <div className="flex flex-col items-center justify-center text-white text-xl md:text-3xl md:w-auto cursor-default z-10">
       <p>
         {currentDate.year + '-' + currentDate.month + '-' + currentDate.date} {currentDate.daysOfWeek[currentDate.day]}
       </p>

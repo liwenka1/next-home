@@ -3,7 +3,7 @@
 }
 
 .input-transition-enter-active {
-	@apply opacity-100 transition-all duration-300
+	@apply opacity-100 transition-all duration-500
 }
 
 .input-transition-exit {
@@ -11,5 +11,5 @@
 }
 
 .input-transition-exit-active {
-	@apply opacity-0 transition-all duration-300
+	@apply opacity-0 transition-all duration-500
 }

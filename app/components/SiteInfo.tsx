@@ -35,11 +35,11 @@ const SiteInfo = () => {
   const [onFocus, setOnFocus] = useState(false)
 
   return (
-    <div className="flex-1 flex flex-col justify-between pb-5 text-white w-full relative">
+    <div className="flex-1 flex flex-col justify-between pb-5 text-white w-full">
       {onFocus && (
         <div className="fixed inset-0 backdrop-filter backdrop-blur-md" onClick={() => setOnFocus(false)}></div>
       )}
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center relative">
         <CSSTransition in={onFocus} timeout={300} classNames="input-transition" unmountOnExit>
           <InputFocus />
         </CSSTransition>

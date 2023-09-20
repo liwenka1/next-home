@@ -2,11 +2,8 @@
 
 import Link from 'next/link'
 import { FaBlog, FaMusic, FaBook, FaPaperPlane } from 'react-icons/fa'
-import InputFocus from './InputFocus'
-import InputNormal from './InputNormal'
+import InputFocus from './InputSearch'
 import { useState } from 'react'
-import { CSSTransition } from 'react-transition-group'
-import './inputSearch.css'
 
 const SiteInfo = () => {
   const links = [
@@ -32,20 +29,15 @@ const SiteInfo = () => {
     }
   ]
 
-  const [onFocus, setOnFocus] = useState(false)
+  const [isFocus, setIsFocus] = useState(false)
 
   return (
     <div className="flex-1 flex flex-col justify-between pb-5 text-white w-full">
-      {onFocus && (
-        <div className="fixed inset-0 backdrop-filter backdrop-blur-md" onClick={() => setOnFocus(false)}></div>
+      {isFocus && (
+        <div className="fixed inset-0 backdrop-filter backdrop-blur-md" onClick={() => setIsFocus(false)}></div>
       )}
       <div className="flex justify-center items-center relative">
-        <CSSTransition in={onFocus} timeout={300} classNames="input-transition" unmountOnExit>
-          <InputFocus />
-        </CSSTransition>
-        <CSSTransition in={!onFocus} timeout={300} classNames="input-transition" unmountOnExit>
-          <InputNormal onFocus={() => setOnFocus(true)} />
-        </CSSTransition>
+        <InputFocus isFocus={isFocus} onFocus={() => setIsFocus(true)} />
       </div>
       <div className="md:flex md:items-center md:justify-center gap-10 grid grid-cols-2">
         {links.map(({ href, icon, text }, index) => (

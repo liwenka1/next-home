@@ -1,16 +1,15 @@
 import { Input } from '@/components/ui/input'
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { FaGoogle, FaSearch } from 'react-icons/fa'
 import fetchJsonp from 'fetch-jsonp'
+import clsx from 'clsx'
 
-const InputFocus = () => {
-  const inputFocusRef = useRef<HTMLInputElement | null>(null)
-  useEffect(() => {
-    if (inputFocusRef.current) {
-      inputFocusRef.current.focus()
-    }
-  })
+interface InputSearchProps {
+  isFocus: boolean
+  onFocus: () => void
+}
 
+const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
   const [value, setValue] = useState<string>('')
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
@@ -41,12 +40,17 @@ const InputFocus = () => {
   }, [value])
 
   return (
-    <div className="absolute top-24 max-w-[680px] w-[calc(100%-60px)] flex flex-row">
+    <div className={clsx(`absolute max-w-[680px] w-[calc(100%-60px)] flex flex-row`, isFocus ? ' top-24' : ' top-36')}>
       <Input
         type="text"
-        className="backdrop-blur-md bg-white text-black focus:outline-0 focus:outline-white focus:leading-10 focus:align-middle rounded-full text-center"
-        ref={inputFocusRef}
+        className={clsx(
+          `backdrop-blur-md bg-white text-black focus:outline-0 focus:outline-white focus:leading-10 focus:align-middle rounded-full text-center`,
+          isFocus
+            ? ''
+            : 'backdrop-blur-xl bg-black/20 placeholder:text-white placeholder:text-center placeholder:pt-1 border-0 rounded-full'
+        )}
         value={value}
+        onFocus={onFocus}
         onChange={(e) => handleChange(e)}
         onKeyDown={(e) => handleKeyDown(e)}
       />
@@ -63,4 +67,4 @@ const InputFocus = () => {
   )
 }
 
-export default InputFocus
+export default InputSearch

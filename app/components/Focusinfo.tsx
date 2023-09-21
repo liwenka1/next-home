@@ -31,7 +31,7 @@ const Focusinfo = () => {
     }
   ]
   return (
-    <div className="text-white z-0">
+    <div className="text-white pb-10 z-0">
       <div className="md:flex flex-col items-center justify-center rounded-md text-base hidden">
         <p>{oneDayEnglish?.content}</p>
         <p>{oneDayEnglish?.note}</p>

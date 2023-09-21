@@ -12,7 +12,7 @@ const Clock = () => {
   const { hours, minutes, seconds, weather } = useClock()
 
   return (
-    <div className="flex flex-col items-center justify-center text-white text-xl md:text-3xl md:w-auto cursor-default z-10">
+    <div className="flex flex-col items-center justify-center text-white text-xl md:text-3xl md:w-auto cursor-default pt-20 z-10">
       <p>
         {year + '-' + month + '-' + date} {daysOfWeek[day]}
       </p>

@@ -49,11 +49,16 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
   }, [isFocus])
 
   return (
-    <div className={clsx(`absolute max-w-[680px] w-[calc(100%-60px)] flex flex-row`, isFocus ? ' top-24' : ' top-36')}>
+    <div
+      className={clsx(
+        `absolute max-w-[680px] w-[calc(100%-60px)] h-10 flex flex-row top-24 transition-transform duration-500`,
+        isFocus && 'translate-y-[-30px]'
+      )}
+    >
       <Input
         type="text"
         className={clsx(
-          `backdrop-blur-md bg-white text-black focus:outline-0 focus:outline-white focus:leading-10 focus:align-middle rounded-full text-center border-0 transition duration-350 ease-linear`,
+          `backdrop-blur-md bg-white text-black focus:outline-0 focus:outline-white focus:align-middle rounded-full text-center border-0`,
           !isFocus && 'backdrop-blur-xl bg-black/20 placeholder:text-white placeholder:text-center placeholder:pt-1'
         )}
         placeholder={isFocus ? '' : 'Search'}
@@ -64,7 +69,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
       />
       <div
         className={clsx(
-          `absolute h-9 w-12 flex items-center justify-center cursor-pointer rounded-full`,
+          `absolute h-full w-12 flex items-center justify-center cursor-pointer rounded-full transition-colors duration-500`,
           isFocus
             ? 'hover:bg-gray-300 hover:bg-opacity-50 text-gray-500'
             : 'hover:bg-black hover:bg-opacity-50 text-white'
@@ -74,7 +79,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
       </div>
       <div
         className={clsx(
-          `absolute h-9 w-12 flex items-center justify-center cursor-pointer rounded-full right-0`,
+          `absolute h-full w-12 flex items-center justify-center cursor-pointer rounded-full right-0 transition-colors duration-500`,
           isFocus
             ? 'hover:bg-gray-300 hover:bg-opacity-50 text-gray-500'
             : 'hover:bg-black hover:bg-opacity-50 text-white'

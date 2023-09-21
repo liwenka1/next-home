@@ -1,9 +1,11 @@
+import Background from '../components/Background'
 import Footer from './components/Footer'
 import Main from './components/Main'
 
 const Home = () => {
   return (
-    <div className="h-full bg-[url('/images/bg03.png')] bg-cover bg-center font-['pacificoregular']">
+    <div className="h-full font-['pacificoregular']">
+      <Background />
       <Main />
       <Footer />
     </div>

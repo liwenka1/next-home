@@ -3,12 +3,18 @@
 import { useClock } from '@/app/hook/useClock'
 
 const Clock = () => {
-  const { hours, minutes, seconds, currentDate, weather } = useClock()
+  const now = new Date()
+  const date = now.getDate()
+  const month = now.getMonth() + 1
+  const year = now.getFullYear()
+  const day = now.getDay()
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const { hours, minutes, seconds, weather } = useClock()
 
   return (
     <div className="flex flex-col items-center justify-center text-white text-xl md:text-3xl md:w-auto cursor-default z-10">
       <p>
-        {currentDate.year + '-' + currentDate.month + '-' + currentDate.date} {currentDate.daysOfWeek[currentDate.day]}
+        {year + '-' + month + '-' + date} {daysOfWeek[day]}
       </p>
       <p>
         {hours[0]}

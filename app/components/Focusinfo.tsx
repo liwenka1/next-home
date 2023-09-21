@@ -3,17 +3,14 @@
 import { oneDayEnglish } from '@/app/type'
 import axios from 'axios'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { AiFillGithub, AiFillWechat, AiFillMail, AiFillTwitterCircle } from 'react-icons/ai'
 
 const Focusinfo = () => {
   const [oneDayEnglish, setOneDayEnglish] = useState<oneDayEnglish | null>(null)
-
-  useEffect(() => {
-    axios.get('https://api.oioweb.cn/api/common/OneDayEnglish').then((res) => {
-      setOneDayEnglish(res.data.result)
-    })
-  }, [])
+  axios.get('https://api.oioweb.cn/api/common/OneDayEnglish').then((res) => {
+    setOneDayEnglish(res.data.result)
+  })
 
   const contactLinks = [
     {
@@ -34,14 +31,14 @@ const Focusinfo = () => {
     }
   ]
   return (
-    <div className="text-white">
+    <div className="text-white z-0">
       <div className="md:flex flex-col items-center justify-center rounded-md text-base hidden">
         <p>{oneDayEnglish?.content}</p>
         <p>{oneDayEnglish?.note}</p>
       </div>
       <div className="flex items-center justify-center gap-3 mt-4 mb-2">
         {contactLinks.map(({ icon, href }, index) => (
-          <Link key={index} href={href} target="_blank" className="hover:scale-110 transition">
+          <Link key={index} href={href} target="_blank" className="hover:scale-110 transition-transform">
             {icon}
           </Link>
         ))}

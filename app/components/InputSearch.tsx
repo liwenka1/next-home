@@ -3,6 +3,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { FaGoogle, FaSearch } from 'react-icons/fa'
 import fetchJsonp from 'fetch-jsonp'
 import clsx from 'clsx'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 interface InputSearchProps {
   isFocus: boolean
@@ -13,33 +14,44 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
   const [keyword, setKeyword] = useState<string>('')
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value)
-    console.log('当前输入值为：', event.target.value)
   }
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    console.log('用户按下了按键', event.key, '，对应的 Unicode 值为', event.keyCode)
     if (event.key === 'Enter') {
       goSearch()
     }
   }
-  const goSearch = () => {
-    window.open(`https://www.baidu.com/s?wd=${keyword}`)
+  const goSearch = (s?: string) => {
+    if (s) {
+      window.open(`https://www.baidu.com/s?wd=${s}`)
+    } else {
+      window.open(`https://www.baidu.com/s?wd=${keyword}`)
+    }
   }
 
+  const [suggestion, setSuggestion] = useState<Array<string>>([])
   useEffect(() => {
+    let timer: NodeJS.Timeout
+
     if (keyword) {
-      const encodedKeyword = encodeURIComponent(keyword)
-      fetchJsonp(`https://suggestion.baidu.com/su?wd=${encodedKeyword}&cb=json`, {
-        // 回调参数
-        jsonpCallback: 'cb'
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data)
+      timer = setTimeout(() => {
+        const encodedKeyword = encodeURIComponent(keyword)
+        fetchJsonp(`https://suggestion.baidu.com/su?wd=${encodedKeyword}&cb=json`, {
+          // 回调参数
+          jsonpCallback: 'cb'
         })
-        .catch((error) => {
-          console.log(error)
-        })
+          .then((response) => response.json())
+          .then((data) => {
+            setSuggestion(data.s)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }, 300)
+    } else {
+      setSuggestion([])
     }
+
+    return () => clearTimeout(timer)
   }, [keyword])
 
   useEffect(() => {
@@ -88,6 +100,21 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
       >
         <FaSearch size={15} />
       </div>
+      {isFocus && suggestion.length > 0 && (
+        <div className="absolute w-full max-h-[680px] h-72 top-14 backdrop-blur-xl bg-black/20 rounded-md">
+          <ScrollArea className="h-full w-full border-0 p-4 rounded-md">
+            {suggestion.map((s, i) => (
+              <p
+                key={i}
+                className="cursor-pointer hover:bg-gray-300 hover:bg-opacity-50 rounded-md pl-4 py-1"
+                onClick={() => goSearch(s)}
+              >
+                {s}
+              </p>
+            ))}
+          </ScrollArea>
+        </div>
+      )}
     </div>
   )
 }

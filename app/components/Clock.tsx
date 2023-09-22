@@ -13,22 +13,22 @@ const Clock = () => {
 
   return (
     <div className="flex flex-col items-center justify-center text-white text-xl md:text-3xl md:w-auto cursor-default pt-20 z-10">
-      <p>
+      <p suppressHydrationWarning>
         {year + '-' + month + '-' + date} {daysOfWeek[day]}
       </p>
-      <p>
+      <p suppressHydrationWarning>
         {hours[0]}
         {hours[1]}:{minutes[0]}
         {minutes[1]}:{seconds[0]}
         {seconds[1]}
       </p>
-      <div className="flex items-center justify-center gap-1 md:gap-3 text-lg md:text-2xl">
+      <p className="flex items-center justify-center gap-1 md:gap-3 text-lg md:text-2xl">
         <span>{weather?.city}</span>
         <span>{weather?.temperature}℃</span>
         <span>{weather?.weather}</span>
         <span>{weather?.winddirection}风</span>
         <span> {weather?.windpower}</span>
-      </div>
+      </p>
     </div>
   )
 }

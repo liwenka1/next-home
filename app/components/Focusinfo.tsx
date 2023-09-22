@@ -5,14 +5,17 @@ import axios from 'axios'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { AiFillGithub, AiFillWechat, AiFillMail, AiFillTwitterCircle } from 'react-icons/ai'
+import useStatusStore from '../stores/useStatusStore'
 
 const Focusinfo = () => {
   const [oneDayEnglish, setOneDayEnglish] = useState<oneDayEnglish | null>(null)
+  const { setOneDayEnglishStatus } = useStatusStore()
   useEffect(() => {
     axios.get('https://api.oioweb.cn/api/common/OneDayEnglish').then((res) => {
       setOneDayEnglish(res.data.result)
+      setOneDayEnglishStatus(true)
     })
-  }, [])
+  }, [setOneDayEnglishStatus])
 
   const contactLinks = [
     {

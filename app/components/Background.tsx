@@ -10,8 +10,8 @@ const Background = () => {
       <Image
         alt="Background"
         src={`/images/bg0${Math.floor(Math.random() * 3) + 1}.png`}
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: 'cover' }}
         onLoad={() => setImgLoadStatus(true)}
       />
     </div>

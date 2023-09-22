@@ -19,3 +19,10 @@ export interface oneDayEnglish {
   dateline: string
   img: string
 }
+
+export interface bingCover {
+  copyright: string
+  copyrightlink: string
+  title: string
+  url: string
+}

@@ -28,7 +28,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
     }
   }
 
-  const [suggestion, setSuggestion] = useState<Array<string>>([])
+  const [suggestion, setSuggestion] = useState<string[]>([])
   useEffect(() => {
     let timer: NodeJS.Timeout
 

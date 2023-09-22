@@ -3,14 +3,16 @@
 import { oneDayEnglish } from '@/app/type'
 import axios from 'axios'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiFillGithub, AiFillWechat, AiFillMail, AiFillTwitterCircle } from 'react-icons/ai'
 
 const Focusinfo = () => {
   const [oneDayEnglish, setOneDayEnglish] = useState<oneDayEnglish | null>(null)
-  axios.get('https://api.oioweb.cn/api/common/OneDayEnglish').then((res) => {
-    setOneDayEnglish(res.data.result)
-  })
+  useEffect(() => {
+    axios.get('https://api.oioweb.cn/api/common/OneDayEnglish').then((res) => {
+      setOneDayEnglish(res.data.result)
+    })
+  }, [])
 
   const contactLinks = [
     {

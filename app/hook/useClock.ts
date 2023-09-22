@@ -32,11 +32,13 @@ export const useClock = () => {
   }, [hours, minutes, seconds])
 
   const [weather, setWeather] = useState<weather | null>(null)
-  axios
-    .get('https://restapi.amap.com/v3/weather/weatherInfo?key=d392d64494354a502e6a166cc6c7e740&city=110000')
-    .then((res) => {
-      setWeather(res.data.lives[0])
-    })
+  useEffect(() => {
+    axios
+      .get('https://restapi.amap.com/v3/weather/weatherInfo?key=d392d64494354a502e6a166cc6c7e740&city=110000')
+      .then((res) => {
+        setWeather(res.data.lives[0])
+      })
+  }, [])
 
   return { hours, minutes, seconds, weather }
 }

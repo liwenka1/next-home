@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react'
 import useStatusStore from '../stores/useStatusStore'
 
 export const useClock = () => {
-  const [time, setTime] = useState(new Date())
+  const d = new Date()
+  const utc = d.getTime() + d.getTimezoneOffset() * 60000
+  const [time, setTime] = useState(new Date(utc + 3600000 * 8))
   const hours = time.getHours().toString().padStart(2, '0')
   const minutes = time.getMinutes().toString().padStart(2, '0')
   const seconds = time.getSeconds().toString().padStart(2, '0')
@@ -12,11 +14,11 @@ export const useClock = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(new Date())
+      setTime(new Date(utc + 3600000 * 8))
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [utc])
 
   const [weather, setWeather] = useState<weather | null>(null)
   useEffect(() => {

@@ -1,9 +1,10 @@
 import { Input } from '@/components/ui/input'
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
-import { FaGoogle, FaSearch } from 'react-icons/fa'
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
+import { FaSearch } from 'react-icons/fa'
 import fetchJsonp from 'fetch-jsonp'
 import clsx from 'clsx'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { SiBaidu, SiMicrosoftbing, SiGoogle, SiGithub, SiZhihu, SiBilibili, SiSinaweibo } from 'react-icons/si'
 
 interface InputSearchProps {
   isFocus: boolean
@@ -22,15 +23,15 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
   }
   const goSearch = (s?: string) => {
     if (s) {
-      window.open(`https://www.baidu.com/s?wd=${s}`)
+      window.open(`${activeEngHref}${s}`)
     } else {
-      window.open(`https://www.baidu.com/s?wd=${keyword}`)
+      window.open(`${activeEngHref}${keyword}`)
     }
   }
 
   const [suggestion, setSuggestion] = useState<string[]>([])
   useEffect(() => {
-    let timer: NodeJS.Timeout
+    let timer: NodeJS.Timeout | null = null
 
     if (keyword) {
       timer = setTimeout(() => {
@@ -51,14 +52,76 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
       setSuggestion([])
     }
 
-    return () => clearTimeout(timer)
-  }, [keyword])
-
-  useEffect(() => {
     if (!isFocus) {
       setKeyword('')
+      setIsChangeEng(false)
+      setSuggestion([])
+      if (timer) {
+        clearTimeout(timer)
+      }
     }
-  }, [isFocus])
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+  }, [keyword, isFocus])
+
+  const [isChangeEng, setIsChangeEng] = useState(false)
+  const handleChangeEng = () => {
+    if (!isFocus) {
+      onFocus()
+    }
+    setIsChangeEng(!isChangeEng)
+  }
+  const engList = [
+    {
+      title: '百度',
+      icon: <SiBaidu />,
+      href: 'https://www.baidu.com/s?wd='
+    },
+    {
+      title: '必应',
+      icon: <SiMicrosoftbing />,
+      href: 'https://www.bing.com/search?q='
+    },
+    {
+      title: '谷歌',
+      icon: <SiGoogle />,
+      href: 'https://www.google.com/search?q='
+    },
+    {
+      title: 'Github',
+      icon: <SiGithub />,
+      href: 'https://github.com/search?q='
+    },
+    {
+      title: '知乎',
+      icon: <SiZhihu />,
+      href: 'https://www.zhihu.com/search?q='
+    },
+    {
+      title: 'Bilibili',
+      icon: <SiBilibili />,
+      href: 'https://search.bilibili.com/all?keyword='
+    },
+    {
+      title: '微博',
+      icon: <SiSinaweibo />,
+      href: 'https://s.weibo.com/weibo?q='
+    }
+  ]
+  const [activeEng, setActiveEng] = useState<React.ReactElement>(<SiBaidu />)
+  const [activeEngHref, setActiveEngHref] = useState<string>('https://www.baidu.com/s?wd=')
+
+  const handleSearch = () => {
+    if (isFocus) {
+      goSearch()
+    } else {
+      onFocus()
+    }
+  }
 
   return (
     <div
@@ -78,6 +141,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
         onFocus={onFocus}
         onChange={(e) => handleChange(e)}
         onKeyDown={(e) => handleKeyDown(e)}
+        onClick={() => setIsChangeEng(false)}
       />
       <div
         className={clsx(
@@ -86,8 +150,9 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
             ? 'hover:bg-gray-300 hover:bg-opacity-50 text-gray-500'
             : 'hover:bg-black hover:bg-opacity-50 text-white'
         )}
+        onClick={handleChangeEng}
       >
-        <FaGoogle size={15} />
+        {React.cloneElement(activeEng, { size: 20 })}
       </div>
       <div
         className={clsx(
@@ -96,25 +161,53 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
             ? 'hover:bg-gray-300 hover:bg-opacity-50 text-gray-500'
             : 'hover:bg-black hover:bg-opacity-50 text-white'
         )}
-        onClick={() => goSearch()}
+        onClick={() => handleSearch()}
       >
-        <FaSearch size={15} />
+        <FaSearch size={20} />
       </div>
-      {isFocus && suggestion.length > 0 && (
-        <div className="absolute w-full max-h-[680px] h-72 top-14 backdrop-blur-xl bg-black/20 rounded-md">
-          <ScrollArea className="h-full w-full border-0 p-4 rounded-md">
-            {suggestion.map((s, i) => (
-              <p
-                key={i}
-                className="cursor-pointer hover:bg-gray-300 hover:bg-opacity-50 rounded-md pl-4 py-1"
-                onClick={() => goSearch(s)}
-              >
-                {s}
-              </p>
-            ))}
-          </ScrollArea>
-        </div>
-      )}
+      <div
+        className={clsx(
+          isFocus && keyword.length > 0 && suggestion.length > 0
+            ? 'absolute w-full max-h-[680px] top-14 backdrop-blur-xl bg-black/20 rounded-md'
+            : 'hidden'
+        )}
+      >
+        <ScrollArea className="h-full w-full border-0 rounded-md">
+          {suggestion.map((s, i) => (
+            <p
+              key={i}
+              className="cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 rounded-md pl-4 py-1"
+              onClick={() => goSearch(s)}
+            >
+              {s}
+            </p>
+          ))}
+        </ScrollArea>
+      </div>
+      <div
+        className={clsx(
+          isChangeEng && isFocus
+            ? 'absolute w-1/3 max-h-[680px] top-14 backdrop-blur-xl bg-black/70 rounded-md'
+            : 'hidden'
+        )}
+      >
+        <ScrollArea className="h-full w-full border-0 rounded-md">
+          {engList.map(({ icon, title, href }, i) => (
+            <div
+              key={i}
+              className="flex py-3 pl-4 w-full cursor-pointer hover:bg-gray-800 hover:bg-opacity-50 rounded-md"
+              onClick={() => {
+                setIsChangeEng(false)
+                setActiveEng(icon)
+                setActiveEngHref(href)
+              }}
+            >
+              {React.cloneElement(icon, { size: 20 })}
+              <span className="text-sm pl-2">{title}</span>
+            </div>
+          ))}
+        </ScrollArea>
+      </div>
     </div>
   )
 }

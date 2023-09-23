@@ -5,6 +5,7 @@ import Clock from '@/app/components/Clock'
 import Focusinfo from '@/app/components/Focusinfo'
 import SiteInfo from '@/app/components/SiteInfo'
 import useStatusStore from '@/app/stores/useStatusStore'
+import { Toaster } from '@/components/ui/toaster'
 
 const Main = () => {
   const { imgLoadStatus, oneDayEnglishStatus, weatherStatus } = useStatusStore()
@@ -17,6 +18,7 @@ const Main = () => {
       <Clock />
       <SiteInfo />
       <Focusinfo />
+      <Toaster />
     </div>
   )
 }

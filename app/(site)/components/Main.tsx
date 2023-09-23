@@ -12,7 +12,7 @@ const Main = () => {
 
   return (
     <div className="flex flex-col justify-between items-center h-full">
-      {!status && <p className="fixed w-full h-full bg-black z-20 flex items-center justify-center">loading...</p>}
+      {!status && <div className="fixed w-full h-full backdrop-blur-md bg-black/20 z-20" />}
       <Background />
       <Clock />
       <SiteInfo />

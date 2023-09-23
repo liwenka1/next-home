@@ -12,7 +12,7 @@ const Clock = () => {
       <p suppressHydrationWarning>
         {format(time, 'yyyy-MM-dd')} {daysOfWeek[getDay(time)]}
       </p>
-      <p suppressHydrationWarning>{format(time, 'HH:mm:ss')}</p>
+      <p suppressHydrationWarning>{format(time, 'HH:mm')}</p>
       <p className="flex items-center justify-center gap-1 md:gap-3 text-lg md:text-2xl">
         <span>{weather?.city}</span>
         <span>{weather?.temperature}℃</span>

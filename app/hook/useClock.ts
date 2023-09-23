@@ -4,22 +4,16 @@ import { useEffect, useState } from 'react'
 import useStatusStore from '../stores/useStatusStore'
 
 export const useClock = () => {
-  const d = new Date()
-  const utc = d.getTime() + d.getTimezoneOffset() * 60000
-  const [time, setTime] = useState(new Date(utc + 3600000 * 8))
-  const hours = time.getHours().toString().padStart(2, '0')
-  const minutes = time.getMinutes().toString().padStart(2, '0')
-  const seconds = time.getSeconds().toString().padStart(2, '0')
-  const { setWeatherStatus } = useStatusStore()
-
+  const [time, setTime] = useState<Date>(new Date())
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(new Date(utc + 3600000 * 8))
+      setTime(new Date())
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [utc])
+  }, [])
 
+  const { setWeatherStatus } = useStatusStore()
   const [weather, setWeather] = useState<weather | null>(null)
   useEffect(() => {
     axios
@@ -30,5 +24,5 @@ export const useClock = () => {
       })
   }, [setWeatherStatus])
 
-  return { hours, minutes, seconds, weather }
+  return { time, weather }
 }

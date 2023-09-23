@@ -4,16 +4,24 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { AiFillGithub, AiFillWechat, AiFillMail, AiFillTwitterCircle } from 'react-icons/ai'
 import useStatusStore from '../stores/useStatusStore'
+import { useToast } from '@/components/ui/use-toast'
 
 const Focusinfo = () => {
   const [oneDayEnglish, setOneDayEnglish] = useState<oneDayEnglish | null>(null)
   const { setOneDayEnglishStatus } = useStatusStore()
+  const { toast } = useToast()
   useEffect(() => {
-    axios.get('/api/oneDayEnglish').then((res) => {
-      setOneDayEnglish(res.data.result)
-      setOneDayEnglishStatus(true)
-    })
-  }, [setOneDayEnglishStatus])
+    axios
+      .get('/api/oneDayEnglish')
+      .then((res) => setOneDayEnglish(res.data.result))
+      .catch(() =>
+        toast({
+          variant: 'destructive',
+          description: 'Something went wrong!'
+        })
+      )
+      .finally(() => setOneDayEnglishStatus(true))
+  }, [setOneDayEnglishStatus, toast])
 
   const contactLinks = [
     {

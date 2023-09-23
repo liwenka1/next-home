@@ -8,12 +8,11 @@ import useStatusStore from '@/app/stores/useStatusStore'
 
 const Main = () => {
   const { imgLoadStatus, oneDayEnglishStatus, weatherStatus } = useStatusStore()
+  const status = imgLoadStatus && oneDayEnglishStatus && weatherStatus
 
   return (
     <div className="flex flex-col justify-between items-center h-full">
-      {(!imgLoadStatus || !oneDayEnglishStatus || !weatherStatus) && (
-        <p className="fixed w-full h-full bg-black z-20 flex items-center justify-center">loading...</p>
-      )}
+      {!status && <p className="fixed w-full h-full bg-black z-20 flex items-center justify-center">loading...</p>}
       <Background />
       <Clock />
       <SiteInfo />

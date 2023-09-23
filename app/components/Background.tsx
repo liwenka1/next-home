@@ -3,15 +3,24 @@ import useStatusStore from '../stores/useStatusStore'
 import { useEffect, useState } from 'react'
 import { bingCover } from '../type'
 import axios from 'axios'
+import { useToast } from '@/components/ui/use-toast'
 
 const Background = () => {
   const { setImgLoadStatus } = useStatusStore()
   const [bingCover, setBingCover] = useState<bingCover[]>([])
+  const { toast } = useToast()
   useEffect(() => {
-    axios.get('/api/bing').then((res) => {
-      setBingCover(res.data.result)
-    })
-  }, [])
+    axios
+      .get('/api/bing')
+      .then((res) => setBingCover(res.data.result))
+      .catch(() =>
+        toast({
+          variant: 'destructive',
+          description: 'Something went wrong!'
+        })
+      )
+      .finally(() => setImgLoadStatus(true))
+  }, [setImgLoadStatus, toast])
 
   return (
     <>
@@ -23,7 +32,6 @@ const Background = () => {
             src={bingCover[Math.floor(Math.random() * 7)].url}
             fill
             style={{ objectFit: 'cover' }}
-            onLoad={() => setImgLoadStatus(true)}
           />
         )}
       </div>

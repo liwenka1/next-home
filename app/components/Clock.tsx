@@ -1,5 +1,3 @@
-'use client'
-
 import { useClock } from '@/app/hook/useClock'
 import { format, getDay } from 'date-fns'
 

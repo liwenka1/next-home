@@ -17,12 +17,10 @@ export const useClock = () => {
   const { setWeatherStatus } = useStatusStore()
   const [weather, setWeather] = useState<weather | null>(null)
   useEffect(() => {
-    axios
-      .get('https://restapi.amap.com/v3/weather/weatherInfo?key=d392d64494354a502e6a166cc6c7e740&city=110000')
-      .then((res) => {
-        setWeather(res.data.lives[0])
-        setWeatherStatus(true)
-      })
+    axios.get('/api/weather').then((res) => {
+      setWeather(res.data.lives[0])
+      setWeatherStatus(true)
+    })
   }, [setWeatherStatus])
 
   return { time, weather }

@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import useStatusStore from '../stores/useStatusStore'
 import { useEffect, useState } from 'react'
@@ -10,7 +8,7 @@ const Background = () => {
   const { setImgLoadStatus } = useStatusStore()
   const [bingCover, setBingCover] = useState<bingCover[]>([])
   useEffect(() => {
-    axios.get('https://api.oioweb.cn/api/bing').then((res) => {
+    axios.get('/api/bing').then((res) => {
       setBingCover(res.data.result)
     })
   }, [])
@@ -18,16 +16,17 @@ const Background = () => {
   return (
     <>
       <div className="fixed w-full h-full z-0 bg-black opacity-50" />
-      {bingCover.length > 0 && (
-        <Image
-          className="fixed -z-10 w-full h-full"
-          alt="Background"
-          src={bingCover[Math.floor(Math.random() * 7)].url}
-          fill
-          style={{ objectFit: 'cover' }}
-          onLoad={() => setImgLoadStatus(true)}
-        />
-      )}
+      <div className="fixed -z-10 w-full h-full">
+        {bingCover.length > 0 && (
+          <Image
+            alt="Background"
+            src={bingCover[Math.floor(Math.random() * 7)].url}
+            fill
+            style={{ objectFit: 'cover' }}
+            onLoad={() => setImgLoadStatus(true)}
+          />
+        )}
+      </div>
     </>
   )
 }

@@ -1,5 +1,3 @@
-'use client'
-
 import { oneDayEnglish } from '@/app/type'
 import axios from 'axios'
 import Link from 'next/link'
@@ -11,7 +9,7 @@ const Focusinfo = () => {
   const [oneDayEnglish, setOneDayEnglish] = useState<oneDayEnglish | null>(null)
   const { setOneDayEnglishStatus } = useStatusStore()
   useEffect(() => {
-    axios.get('https://api.oioweb.cn/api/common/OneDayEnglish').then((res) => {
+    axios.get('/api/oneDayEnglish').then((res) => {
       setOneDayEnglish(res.data.result)
       setOneDayEnglishStatus(true)
     })

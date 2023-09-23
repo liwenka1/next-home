@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { FaBlog, FaMusic, FaBook, FaPaperPlane } from 'react-icons/fa'
 import InputSearch from './InputSearch'

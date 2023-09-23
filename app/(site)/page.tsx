@@ -3,7 +3,7 @@ import Main from './components/Main'
 
 const Home = () => {
   return (
-    <div className="h-full font-['pacificoregular']">
+    <div className="h-full font-['HarmonyOS_Regular']">
       <Main />
       <Footer />
     </div>

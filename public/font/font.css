@@ -3,10 +3,8 @@
 
 
 @font-face {
-    font-family: 'pacificoregular';
-    src: url('pacifico-regular-webfont.woff2') format('woff2'),
-         url('pacifico-regular-webfont.woff') format('woff');
+    font-family: 'HarmonyOS_Regular';
+    src: url('HarmonyOS_Sans_Regular.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
-
 }

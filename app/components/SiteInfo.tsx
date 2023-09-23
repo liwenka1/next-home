@@ -1,32 +1,9 @@
 import Link from 'next/link'
-import { FaBlog, FaMusic, FaBook, FaPaperPlane } from 'react-icons/fa'
 import InputSearch from './InputSearch'
 import { useState } from 'react'
+import { siteInfoLinks } from '../data'
 
 const SiteInfo = () => {
-  const links = [
-    {
-      href: 'https://www.liwenkai.asia/',
-      icon: <FaBlog />,
-      text: 'Blog'
-    },
-    {
-      href: 'https://www.liwenkai.asia/',
-      icon: <FaMusic />,
-      text: 'Music'
-    },
-    {
-      href: 'https://www.websitenav.asia/',
-      icon: <FaBook />,
-      text: 'Nav'
-    },
-    {
-      href: 'https://www.liwenkai.asia/',
-      icon: <FaPaperPlane />,
-      text: 'Search'
-    }
-  ]
-
   const [isFocus, setIsFocus] = useState(false)
 
   return (
@@ -38,14 +15,14 @@ const SiteInfo = () => {
         <InputSearch isFocus={isFocus} onFocus={() => setIsFocus(true)} />
       </div>
       <div className="md:flex md:items-center md:justify-center gap-10 grid grid-cols-2">
-        {links.map(({ href, icon, text }, index) => (
+        {siteInfoLinks.map(({ href, icon: Icon, text }, index) => (
           <Link
             key={index}
             href={href}
             target="_blank"
             className="flex items-center justify-center text-lg md:text-2xl rounded-md gap-3 cursor-pointer hover:scale-110 transition-transform duration-300"
           >
-            {icon}
+            <Icon />
             {text}
           </Link>
         ))}

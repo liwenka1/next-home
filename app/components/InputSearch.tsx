@@ -4,7 +4,8 @@ import { FaSearch } from 'react-icons/fa'
 import fetchJsonp from 'fetch-jsonp'
 import clsx from 'clsx'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { SiBaidu, SiMicrosoftbing, SiGoogle, SiGithub, SiZhihu, SiBilibili, SiSinaweibo } from 'react-icons/si'
+import { IconType } from 'react-icons'
+import { engList } from '../data'
 
 interface InputSearchProps {
   isFocus: boolean
@@ -70,71 +71,27 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
 
   const [isChangeEng, setIsChangeEng] = useState(false)
   const handleChangeEng = () => {
-    if (!isFocus) {
-      onFocus()
-    }
     setIsChangeEng(!isChangeEng)
   }
-  const engList = [
-    {
-      title: '百度',
-      icon: <SiBaidu />,
-      href: 'https://www.baidu.com/s?wd='
-    },
-    {
-      title: '必应',
-      icon: <SiMicrosoftbing />,
-      href: 'https://www.bing.com/search?q='
-    },
-    {
-      title: '谷歌',
-      icon: <SiGoogle />,
-      href: 'https://www.google.com/search?q='
-    },
-    {
-      title: 'Github',
-      icon: <SiGithub />,
-      href: 'https://github.com/search?q='
-    },
-    {
-      title: '知乎',
-      icon: <SiZhihu />,
-      href: 'https://www.zhihu.com/search?q='
-    },
-    {
-      title: 'Bilibili',
-      icon: <SiBilibili />,
-      href: 'https://search.bilibili.com/all?keyword='
-    },
-    {
-      title: '微博',
-      icon: <SiSinaweibo />,
-      href: 'https://s.weibo.com/weibo?q='
-    }
-  ]
-  const [activeEng, setActiveEng] = useState<React.ReactElement>(<SiBaidu />)
+  const [activeEng, setActiveEng] = useState<{ icon: IconType }>({ icon: engList[0].icon })
   const [activeEngHref, setActiveEngHref] = useState<string>('https://www.baidu.com/s?wd=')
 
   const handleSearch = () => {
-    if (isFocus) {
-      goSearch()
-    } else {
-      onFocus()
-    }
+    goSearch()
   }
 
   return (
     <div
       className={clsx(
-        `absolute max-w-[680px] w-[calc(100%-60px)] h-10 flex flex-row top-24 transition-transform duration-500`,
-        isFocus && 'translate-y-[-30px]'
+        `absolute max-w-[680px] w-[calc(100%-60px)] h-10 flex flex-row top-24 transition-all duration-500`,
+        isFocus ? 'translate-y-[-30px]' : 'max-w-[340px]'
       )}
     >
       <Input
         type="text"
         className={clsx(
-          `backdrop-blur-md bg-white text-black focus:outline-0 focus:outline-white focus:align-middle rounded-full text-center border-0`,
-          !isFocus && 'backdrop-blur-xl bg-black/20 placeholder:text-white placeholder:text-center placeholder:pt-1'
+          'focus:outline-0 focus:outline-white focus:align-middle rounded-full text-center border-0 placeholder:text-white placeholder:text-center placeholder:pt-1',
+          isFocus ? 'bg-white text-black' : 'backdrop-blur-xl bg-black/20 '
         )}
         placeholder={isFocus ? '' : 'Search'}
         value={keyword}
@@ -146,20 +103,16 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
       <div
         className={clsx(
           `absolute h-full w-12 flex items-center justify-center cursor-pointer rounded-full transition-colors duration-500`,
-          isFocus
-            ? 'hover:bg-gray-300 hover:bg-opacity-50 text-gray-500'
-            : 'hover:bg-black hover:bg-opacity-50 text-white'
+          isFocus ? 'hover:bg-gray-300 hover:bg-opacity-50 text-gray-500' : 'hidden'
         )}
         onClick={handleChangeEng}
       >
-        {React.cloneElement(activeEng, { size: 20 })}
+        <activeEng.icon size={20} />
       </div>
       <div
         className={clsx(
           `absolute h-full w-12 flex items-center justify-center cursor-pointer rounded-full right-0 transition-colors duration-500`,
-          isFocus
-            ? 'hover:bg-gray-300 hover:bg-opacity-50 text-gray-500'
-            : 'hover:bg-black hover:bg-opacity-50 text-white'
+          isFocus ? 'hover:bg-gray-300 hover:bg-opacity-50 text-gray-500' : 'hidden'
         )}
         onClick={() => handleSearch()}
       >
@@ -176,7 +129,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
           {suggestion.map((s, i) => (
             <p
               key={i}
-              className="cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 rounded-md pl-4 py-1"
+              className="cursor-pointer hover:bg-black/20 hover:bg-opacity-50 hover:pl-8 transition-all duration-300 rounded-md pl-4 py-1"
               onClick={() => goSearch(s)}
             >
               {s}
@@ -187,22 +140,22 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
       <div
         className={clsx(
           isChangeEng && isFocus
-            ? 'absolute w-1/3 max-h-[680px] top-14 backdrop-blur-xl bg-black/70 rounded-md'
+            ? 'absolute w-1/3 min-w-[150px] max-h-[680px] top-14 backdrop-blur-xl bg-black/70 rounded-md'
             : 'hidden'
         )}
       >
         <ScrollArea className="h-full w-full border-0 rounded-md">
-          {engList.map(({ icon, title, href }, i) => (
+          {engList.map(({ icon: Icon, title, href }, i) => (
             <div
               key={i}
-              className="flex py-3 pl-4 w-full cursor-pointer hover:bg-gray-800 hover:bg-opacity-50 rounded-md"
+              className="flex py-3 pl-4 hover:pl-8 w-full cursor-pointer hover:bg-gray-800 hover:bg-opacity-50 transition-all duration-300 rounded-md"
               onClick={() => {
                 setIsChangeEng(false)
-                setActiveEng(icon)
+                setActiveEng({ icon: Icon })
                 setActiveEngHref(href)
               }}
             >
-              {React.cloneElement(icon, { size: 20 })}
+              <Icon size={20} />
               <span className="text-sm pl-2">{title}</span>
             </div>
           ))}

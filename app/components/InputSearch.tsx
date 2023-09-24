@@ -83,8 +83,8 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
   return (
     <div
       className={clsx(
-        `absolute max-w-[680px] w-[calc(100%-60px)] h-10 flex flex-row top-24 transition-all duration-500`,
-        isFocus ? 'translate-y-[-30px]' : 'max-w-[340px]'
+        `absolute w-[calc(100%-60px)] h-10 flex flex-row top-5 transition-all duration-500`,
+        isFocus ? 'max-w-[680px]' : 'max-w-[340px]'
       )}
     >
       <Input

@@ -22,13 +22,11 @@ export const useClock = () => {
   const [weatherIcon, setWeatherIcon] = useState<string>('images/weather-animation-icon/not-available.svg')
   useEffect(() => {
     axios
-      .get('/api/ip')
+      .post('/api/weather', { adcode: '110000' })
       .then((res) => {
-        axios.post('/api/weather', { adcode: res.data.adcode }).then((res) => {
-          setWeather(res.data.lives[0])
-          const weatherName = weatherFormatter(res.data.lives[0].weather)
-          setWeatherIcon(getWeatherIconURL(weatherName))
-        })
+        setWeather(res.data.lives[0])
+        const weatherName = weatherFormatter(res.data.lives[0].weather)
+        setWeatherIcon(getWeatherIconURL(weatherName))
       })
       .catch(() =>
         toast({

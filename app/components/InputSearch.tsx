@@ -120,9 +120,8 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
       </div>
       <div
         className={clsx(
-          isFocus && keyword.length > 0 && suggestion.length > 0
-            ? 'absolute w-full max-h-[680px] top-14 backdrop-blur-xl bg-black/20 rounded-md'
-            : 'hidden'
+          'transition-opacity duration-500 absolute w-full max-h-[680px] top-14 backdrop-blur-xl bg-black/20 rounded-md',
+          isFocus && keyword.length > 0 && suggestion.length > 0 ? 'opacity-1 z-10' : 'opacity-0'
         )}
       >
         <ScrollArea className="h-full w-full border-0 rounded-md">
@@ -139,9 +138,8 @@ const InputSearch: React.FC<InputSearchProps> = ({ isFocus, onFocus }) => {
       </div>
       <div
         className={clsx(
-          isChangeEng && isFocus
-            ? 'absolute w-1/3 min-w-[150px] max-h-[680px] top-14 backdrop-blur-xl bg-black/70 rounded-md'
-            : 'hidden'
+          'transition-opacity duration-500 absolute w-1/3 min-w-[150px] max-h-[680px] top-14 backdrop-blur-xl bg-black/70 rounded-md',
+          isChangeEng && isFocus ? 'opacity-1 z-20' : 'opacity-0'
         )}
       >
         <ScrollArea className="h-full w-full border-0 rounded-md">

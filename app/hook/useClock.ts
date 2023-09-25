@@ -2,16 +2,17 @@ import { weather } from '@/app/type'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import useStatusStore from '../stores/useStatusStore'
-import { utcToZonedTime } from 'date-fns-tz'
 import { useToast } from '@/components/ui/use-toast'
 import { getWeatherIconURL, weatherFormatter } from '../utils/utils'
 
 export const useClock = () => {
-  const [time, setTime] = useState<Date>(utcToZonedTime(new Date(), 'Asia/Shanghai'))
+  const [time, setTime] = useState<Date>(
+    new Date(new Date().getTime() + (new Date().getTimezoneOffset() + 480) * 60 * 1000)
+  )
   const { toast } = useToast()
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(utcToZonedTime(new Date(), 'Asia/Shanghai'))
+      setTime(new Date(new Date().getTime() + (new Date().getTimezoneOffset() + 480) * 60 * 1000))
     }, 1000)
 
     return () => clearInterval(interval)

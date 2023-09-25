@@ -1,5 +1,5 @@
 import { useClock } from '@/app/hook/useClock'
-import { format, getDay, getHours, getMinutes } from 'date-fns'
+import { format, getDay } from 'date-fns'
 import Image from 'next/image'
 
 const Clock = () => {
@@ -11,7 +11,7 @@ const Clock = () => {
       {time && (
         <div className="flex flex-col items-center justify-center text-white md:w-auto cursor-default pt-40 z-10 gap-1">
           <p suppressHydrationWarning className="text-7xl">
-            {getHours(time)}:{getMinutes(time)}
+            {format(time, 'HH:mm')}
           </p>
           <p suppressHydrationWarning className="text-base text-gray-200 font-light mt-5">
             {format(time, 'MM 月 dd 日')} {daysOfWeek[getDay(time)]}

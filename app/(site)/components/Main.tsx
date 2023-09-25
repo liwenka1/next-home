@@ -8,8 +8,8 @@ import useStatusStore from '@/app/stores/useStatusStore'
 import { Toaster } from '@/components/ui/toaster'
 
 const Main = () => {
-  const { imgLoadStatus, oneDayEnglishStatus, weatherStatus } = useStatusStore()
-  const status = imgLoadStatus && oneDayEnglishStatus && weatherStatus
+  const { imgLoadStatus, oneDayEnglishStatus, weatherStatus, timeStatus } = useStatusStore()
+  const status = imgLoadStatus && oneDayEnglishStatus && weatherStatus && timeStatus
 
   return (
     <div className="flex flex-col justify-between items-center h-full">

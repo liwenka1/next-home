@@ -8,14 +8,16 @@ const Clock = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center text-white md:w-auto cursor-default pt-40 z-10 gap-1">
-        <p suppressHydrationWarning className="text-7xl">
-          {getHours(time)}:{getMinutes(time)}
-        </p>
-        <p suppressHydrationWarning className="text-base text-gray-200 font-light mt-5">
-          {format(time, 'MM 月 dd 日')} {daysOfWeek[getDay(time)]}
-        </p>
-      </div>
+      {time && (
+        <div className="flex flex-col items-center justify-center text-white md:w-auto cursor-default pt-40 z-10 gap-1">
+          <p suppressHydrationWarning className="text-7xl">
+            {getHours(time)}:{getMinutes(time)}
+          </p>
+          <p suppressHydrationWarning className="text-base text-gray-200 font-light mt-5">
+            {format(time, 'MM 月 dd 日')} {daysOfWeek[getDay(time)]}
+          </p>
+        </div>
+      )}
       <div className="fixed right-5 flex items-center justify-center flex-col">
         <div className="flex items-center justify-center">
           <Image src={weatherIcon} alt="weatherIcon" width={80} height={80} />

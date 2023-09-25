@@ -7,6 +7,8 @@ interface StatusStoreProps {
   setOneDayEnglishStatus: (status: boolean) => void
   weatherStatus: boolean
   setWeatherStatus: (status: boolean) => void
+  timeStatus: boolean
+  setTimeStatus: (status: boolean) => void
 }
 
 const useStatusStore = create<StatusStoreProps>((set) => ({
@@ -15,7 +17,9 @@ const useStatusStore = create<StatusStoreProps>((set) => ({
   oneDayEnglishStatus: false,
   setOneDayEnglishStatus: (status) => set(() => ({ oneDayEnglishStatus: status })),
   weatherStatus: false,
-  setWeatherStatus: (status) => set(() => ({ weatherStatus: status }))
+  setWeatherStatus: (status) => set(() => ({ weatherStatus: status })),
+  timeStatus: false,
+  setTimeStatus: (status) => set(() => ({ timeStatus: status }))
 }))
 
 export default useStatusStore

@@ -6,19 +6,18 @@ import { useToast } from '@/components/ui/use-toast'
 import { getWeatherIconURL, weatherFormatter } from '../utils/utils'
 
 export const useClock = () => {
-  const now = new Date()
-  const [time, setTime] = useState<Date>(new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60 * 1000))
-
+  const [time, setTime] = useState<Date | null>(null)
+  const { timeStatus, setTimeStatus, setWeatherStatus } = useStatusStore()
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date(new Date().getTime() + (new Date().getTimezoneOffset() + 480) * 60 * 1000))
+      if (!timeStatus) setTimeStatus(true)
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [time])
+  }, [timeStatus, setTimeStatus])
 
   const { toast } = useToast()
-  const { setWeatherStatus } = useStatusStore()
   const [weather, setWeather] = useState<weather | null>(null)
   const [weatherIcon, setWeatherIcon] = useState<string>('images/weather-animation-icon/not-available.svg')
   useEffect(() => {

@@ -6,7 +6,9 @@ import { useToast } from '@/components/ui/use-toast'
 import { getWeatherIconURL, weatherFormatter } from '../utils/utils'
 
 export const useClock = () => {
-  const [time, setTime] = useState<Date>(new Date())
+  const [time, setTime] = useState<Date>(
+    new Date(new Date().getTime() + (new Date().getTimezoneOffset() + 480) * 60 * 1000)
+  )
 
   useEffect(() => {
     const interval = setInterval(() => {

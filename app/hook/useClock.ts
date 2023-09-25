@@ -14,7 +14,7 @@ export const useClock = () => {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [time])
 
   const { toast } = useToast()
   const { setWeatherStatus } = useStatusStore()

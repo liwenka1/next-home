@@ -13,7 +13,11 @@ const Main = () => {
 
   return (
     <div className="flex flex-col justify-between items-center h-full">
-      {!status && <div className="fixed w-full h-full backdrop-blur-md bg-black/20 z-20" />}
+      {!status && (
+        <div className="fixed w-full h-full backdrop-blur-md bg-black z-20 flex justify-center items-center text-3xl">
+          加载中....
+        </div>
+      )}
       <Background />
       <Clock />
       <SiteInfo />

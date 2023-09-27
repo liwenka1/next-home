@@ -1,9 +1,10 @@
+import axios from 'axios'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const res = await fetch(`https://restapi.amap.com/v3/ip?key=d392d64494354a502e6a166cc6c7e740`)
-    const data = await res.json()
+    const res = await axios.get('https://restapi.amap.com/v3/ip?key=d392d64494354a502e6a166cc6c7e740')
+    const data = await res.data
 
     return NextResponse.json(data)
   } catch (error) {

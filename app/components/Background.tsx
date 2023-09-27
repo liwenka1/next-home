@@ -11,7 +11,7 @@ const Background = () => {
   const { toast } = useToast()
   useEffect(() => {
     axios
-      .get('/api/bing')
+      .get('https://api.oioweb.cn/api/bing')
       .then((res) => setBingCover(res.data.result))
       .catch(() =>
         toast({

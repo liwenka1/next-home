@@ -12,7 +12,7 @@ const Focusinfo = () => {
   const { toast } = useToast()
   useEffect(() => {
     axios
-      .get('/api/oneDayEnglish')
+      .get('https://api.oioweb.cn/api/common/OneDayEnglish')
       .then((res) => setOneDayEnglish(res.data.result))
       .catch(() =>
         toast({

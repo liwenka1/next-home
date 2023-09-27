@@ -24,11 +24,15 @@ export const useClock = () => {
     axios
       .get('https://restapi.amap.com/v3/ip?key=d392d64494354a502e6a166cc6c7e740')
       .then((res) =>
-        axios.post('/api/weather', { adcode: res.data.adcode }).then((res) => {
-          setWeather(res.data.lives[0])
-          const weatherName = weatherFormatter(res.data.lives[0].weather)
-          setWeatherIcon(getWeatherIconURL(weatherName))
-        })
+        axios
+          .get(
+            `https://restapi.amap.com/v3/weather/weatherInfo?key=d392d64494354a502e6a166cc6c7e740&city=${res.data.adcode}`
+          )
+          .then((res) => {
+            setWeather(res.data.lives[0])
+            const weatherName = weatherFormatter(res.data.lives[0].weather)
+            setWeatherIcon(getWeatherIconURL(weatherName))
+          })
       )
       .catch(() =>
         toast({

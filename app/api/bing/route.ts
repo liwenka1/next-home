@@ -1,9 +1,10 @@
+import axios from 'axios'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const res = await fetch('https://api.oioweb.cn/api/bing')
-    const data = await res.json()
+    const res = await axios.get('https://api.oioweb.cn/api/bing')
+    const data = await res.data
 
     return NextResponse.json(data)
   } catch (error) {

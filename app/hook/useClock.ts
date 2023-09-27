@@ -21,14 +21,15 @@ export const useClock = () => {
   const [weather, setWeather] = useState<weather | null>(null)
   const [weatherIcon, setWeatherIcon] = useState<string>('images/weather-animation-icon/not-available.svg')
   useEffect(() => {
-    axios.get('https://restapi.amap.com/v3/ip?key=d392d64494354a502e6a166cc6c7e740').then((res) => console.log(res))
     axios
-      .post('/api/weather', { adcode: '110000' })
-      .then((res) => {
-        setWeather(res.data.lives[0])
-        const weatherName = weatherFormatter(res.data.lives[0].weather)
-        setWeatherIcon(getWeatherIconURL(weatherName))
-      })
+      .get('https://restapi.amap.com/v3/ip?key=d392d64494354a502e6a166cc6c7e740')
+      .then((res) =>
+        axios.post('/api/weather', { adcode: res.data.adcode }).then((res) => {
+          setWeather(res.data.lives[0])
+          const weatherName = weatherFormatter(res.data.lives[0].weather)
+          setWeatherIcon(getWeatherIconURL(weatherName))
+        })
+      )
       .catch(() =>
         toast({
           variant: 'destructive',

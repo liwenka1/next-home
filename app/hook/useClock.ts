@@ -21,7 +21,7 @@ export const useClock = () => {
   const [weather, setWeather] = useState<weather | null>(null)
   const [weatherIcon, setWeatherIcon] = useState<string>('images/weather-animation-icon/not-available.svg')
   useEffect(() => {
-    axios.get('/api/ip').then((res) => console.log(res))
+    axios.get('https://restapi.amap.com/v3/ip?key=d392d64494354a502e6a166cc6c7e740').then((res) => console.log(res))
     axios
       .post('/api/weather', { adcode: '110000' })
       .then((res) => {

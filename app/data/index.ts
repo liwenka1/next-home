@@ -1,27 +1,27 @@
-import { FaBlog, FaMusic, FaBook, FaPaperPlane } from 'react-icons/fa'
+import { FaBlog, FaBook, FaPaperPlane } from 'react-icons/fa'
 import { AiFillGithub, AiFillWechat, AiFillMail, AiFillTwitterCircle } from 'react-icons/ai'
 import { SiBaidu, SiMicrosoftbing, SiGoogle, SiGithub, SiZhihu, SiBilibili, SiSinaweibo } from 'react-icons/si'
 
 const siteInfoLinks = [
   {
-    href: 'https://www.liwenkai.asia/',
+    href: 'https://blog.liwenkai.fun',
     icon: FaBlog,
     text: 'Blog'
   },
+  // {
+  //   href: 'https://www.liwenkai.asia/',
+  //   icon: FaMusic,
+  //   text: 'Music'
+  // },
   {
-    href: 'https://www.liwenkai.asia/',
-    icon: FaMusic,
-    text: 'Music'
-  },
-  {
-    href: 'https://www.websitenav.asia/',
+    href: 'https://nav.liwenkai.fun',
     icon: FaBook,
     text: 'Nav'
   },
   {
-    href: 'https://www.liwenkai.asia/',
+    href: 'https://me.liwenkai.fun',
     icon: FaPaperPlane,
-    text: 'Search'
+    text: 'Me'
   }
 ]
 

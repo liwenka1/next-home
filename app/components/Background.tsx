@@ -25,14 +25,21 @@ const Background = () => {
           description: 'Something went wrong!'
         })
       )
-      .finally(() => setImgLoadStatus(true))
-  }, [setImgLoadStatus, toast])
+  }, [toast])
 
   return (
     <>
       <div className="fixed w-full h-full z-0 bg-black opacity-50" />
       <div className="fixed -z-10 w-full h-full">
-        {isCoverFinsh && <Image alt="Background" src={bingCover[coverNum!].url} fill style={{ objectFit: 'cover' }} />}
+        {isCoverFinsh && (
+          <Image
+            alt="Background"
+            onLoad={() => setImgLoadStatus(true)}
+            src={bingCover[coverNum!].url}
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+        )}
       </div>
     </>
   )
